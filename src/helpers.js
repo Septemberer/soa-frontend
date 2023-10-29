@@ -27,7 +27,10 @@ export function isDateString(value) {
 }
 
 export function convertDateString(value) {
-    return value.substr(6, 4) + value.substr(3, 2) + value.substr(0, 2)
+    console.log("date_rr")
+    console.log(value)
+    console.log("date_rr")
+    return value.substr(0, 10) + ' ' + value.substr(11, 5)
 }
 
 export function toLower(value) {
