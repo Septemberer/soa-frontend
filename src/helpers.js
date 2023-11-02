@@ -27,9 +27,6 @@ export function isDateString(value) {
 }
 
 export function convertDateString(value) {
-    console.log("date_rr")
-    console.log(value)
-    console.log("date_rr")
     return value.substr(0, 10) + ' ' + value.substr(11, 5)
 }
 

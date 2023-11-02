@@ -6,7 +6,7 @@ export const Table = ({ columns, rows }) => {
     const [activePage, setActivePage] = useState(1)
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState({ order: 'asc', orderBy: 'id' })
-    const rowsPerPage = 4
+    const rowsPerPage = 5
 
     const filteredRows = useMemo(() => filterRows(rows, filters), [rows, filters])
     const sortedRows = useMemo(() => sortRows(filteredRows, sort), [filteredRows, sort])
