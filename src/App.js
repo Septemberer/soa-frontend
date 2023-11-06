@@ -20,18 +20,30 @@ export default function App() {
         killer: ""
     });
 
-    const handleChange = (event) => {
+    const [formDataPerson, setFormDataPerson] = useState({
+        id: "",
+        name: "",
+        birthday: "",
+        height: "",
+        passportID: "",
+        hairColor: "WHITE"
+    });
+
+    const handleChangeDragon = (event) => {
         const {name, value} = event.target;
         setFormDataDragon((prevFormData) => ({...prevFormData, [name]: value}));
+    };
+
+    const handleChangePerson = (event) => {
+        const {name, value} = event.target;
+        setFormDataPerson((prevFormData) => ({...prevFormData, [name]: value}));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
     };
 
-    let text = "TEXT_";
-
-    async function deleteData(url = "") {
+    async function deleteDataDragon(url = "") {
         // Default options are marked with *
         const res = await fetch(url, {
             method: "DELETE", // *GET, POST, PUT, DELETE, etc.
@@ -49,6 +61,24 @@ export default function App() {
             });
     }
 
+    async function deleteDataPerson(url = "") {
+        // Default options are marked with *
+        const res = await fetch(url, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+        });
+
+        if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+        }
+
+        getData("http://localhost:8080/jax-rs-1/api/v1/persons")
+            .then((data) => {
+                getPersons(data)
+            });
+    }
+
     async function getData(url = "") {
         // Default options are marked with *
         const response = await fetch(url, {
@@ -56,6 +86,34 @@ export default function App() {
             mode: "cors", // no-cors, *cors, same-origin
         });
         return response.json();
+    }
+
+    async function postDataPerson(url = "", formData = {}) {
+        // Default options are marked with *
+        const res = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify({
+                name: formData.name,
+                birthday: formData.birthday,
+                height: formData.height,
+                passportID: formData.passportID,
+                hairColor: formData.hairColor
+            })
+        })
+
+        if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+        }
+
+        getData("http://localhost:8080/jax-rs-1/api/v1/persons")
+            .then((data) => {
+                getPersons(data)
+            });
     }
 
     async function postDataDragon(url = "", formData = {}) {
@@ -88,6 +146,35 @@ export default function App() {
         getData("http://localhost:8080/jax-rs-1/api/v1/dragons")
             .then((data) => {
                 getDragons(data)
+            });
+    }
+
+    async function putDataPerson(url = "", formData = {}) {
+        // Default options are marked with *
+        const res = await fetch(url, {
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify({
+                id: formData.id,
+                name: formData.name,
+                birthday: formData.birthday,
+                height: formData.height,
+                passportID: formData.passportID,
+                hairColor: formData.hairColor
+            })
+        })
+
+        if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            throw new Error(message);
+        }
+
+        getData("http://localhost:8080/jax-rs-1/api/v1/persons")
+            .then((data) => {
+                getPersons(data)
             });
     }
 
@@ -203,30 +290,30 @@ export default function App() {
             </button>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="id">ID:
-                    <input type="number" id="x" name="id" value={formDataDragon.id} onChange={handleChange}/>
+                    <input type="number" id="id" name="id" value={formDataDragon.id} onChange={handleChangeDragon}/>
                 </label>
 
                 <label htmlFor="name">Name:
-                    <input type="text" id="name" name="name" value={formDataDragon.name} onChange={handleChange}/>
+                    <input type="text" id="name" name="name" value={formDataDragon.name} onChange={handleChangeDragon}/>
                 </label>
 
                 <label htmlFor="x">Coordinates.X:
-                    <input type="number" id="x" name="x" value={formDataDragon.x} onChange={handleChange}/>
+                    <input type="number" id="x" name="x" value={formDataDragon.x} onChange={handleChangeDragon}/>
                 </label>
 
                 <label htmlFor="x">Coordinates.Y:
-                    <input type="number" id="y" name="y" value={formDataDragon.y} onChange={handleChange}/>
+                    <input type="number" id="y" name="y" value={formDataDragon.y} onChange={handleChangeDragon}/>
                 </label>
 
 
                 <label htmlFor="age">Age:
-                    <input type="number" id="age" name="age" value={formDataDragon.age} onChange={handleChange}/>
+                    <input type="number" id="age" name="age" value={formDataDragon.age} onChange={handleChangeDragon}/>
                 </label>
 
 
                 <label htmlFor="color">Color:
                     <select name="color" value={formDataDragon.color}
-                            onChange={handleChange}
+                            onChange={handleChangeDragon}
                             id="color">
                         <option name="color" value="WHITE">White</option>
                         <option name="color" value="BROWN">Brown</option>
@@ -237,7 +324,7 @@ export default function App() {
 
                 <label htmlFor="type">Type:
                     <select name="type" value={formDataDragon.type}
-                            onChange={handleChange}
+                            onChange={handleChangeDragon}
                             id="type">
                         <option name="type" value="WATER">Water</option>
                         <option name="type" value="UNDERGROUND">Underground</option>
@@ -249,7 +336,7 @@ export default function App() {
 
                 <label htmlFor="character">Character:
                     <select name="character" value={formDataDragon.character}
-                            onChange={handleChange}
+                            onChange={handleChangeDragon}
                             id="character">
                         <option name="character" value="WISE">Wise</option>
                         <option name="character" value="CHAOTIC">Chaotic</option>
@@ -260,7 +347,7 @@ export default function App() {
                 <br/>
 
                 <label htmlFor="killer">Killer:
-                    <input type="number" id="killer" name="killer" value={formDataDragon.killer} onChange={handleChange}/>
+                    <input type="number" id="killer" name="killer" value={formDataDragon.killer} onChange={handleChangeDragon}/>
                 </label>
 
                 <button type="submit" onClick={() => {
@@ -291,7 +378,7 @@ export default function App() {
                 </button>
                 <button type="submit" onClick={() => {
                     console.log(formDataDragon.id)
-                    deleteData("http://localhost:8080/jax-rs-1/api/v1/dragons/" + formDataDragon.id)
+                    deleteDataDragon("http://localhost:8080/jax-rs-1/api/v1/dragons/" + formDataDragon.id)
                         .then(() => setFormDataDragon({
                                 id: "",
                                 name: "",
@@ -306,6 +393,79 @@ export default function App() {
                         );
 
                 }}>Delete Dragon
+                </button>
+            </form>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="id">ID:
+                    <input type="number" id="id" name="id" value={formDataPerson.id} onChange={handleChangePerson}/>
+                </label>
+
+                <label htmlFor="name">Name:
+                    <input type="text" id="name" name="name" value={formDataPerson.name} onChange={handleChangePerson}/>
+                </label>
+
+                <label htmlFor="birthday">BirthDay:
+                    <input type="text" id="birthday" name="birthday" value={formDataPerson.birthday} onChange={handleChangePerson}/>
+                </label>
+
+                <label htmlFor="height">Height:
+                    <input type="number" id="height" name="height" value={formDataPerson.height} onChange={handleChangePerson}/>
+                </label>
+
+                <label htmlFor="passportID">Passport ID:
+                    <input type="text" id="passportID" name="passportID" value={formDataPerson.passportID} onChange={handleChangePerson}/>
+                </label>
+
+
+                <label htmlFor="hairColor">Hair Color:
+                    <select name="hairColor" value={formDataPerson.hairColor}
+                            onChange={handleChangePerson}
+                            id="hairColor">
+                        <option name="hairColor" value="WHITE">White</option>
+                        <option name="hairColor" value="BROWN">Brown</option>
+                        <option name="hairColor" value="ORANGE">Orange</option>
+                    </select>
+                </label>
+                <br/>
+
+                <button type="submit" onClick={() => {
+                    console.log(formDataPerson)
+                    postDataPerson("http://localhost:8080/jax-rs-1/api/v1/persons", formDataPerson).then();
+                }}>Create Person
+                </button>
+                <button type="submit" onClick={() => {
+                    console.log(formDataPerson.id)
+                    getData("http://localhost:8080/jax-rs-1/api/v1/persons/" + formDataPerson.id)
+                        .then((person) => {
+                            setFormDataPerson({
+                                id: person.id,
+                                name: person.name,
+                                birthday: person.birthday == null ? null : convertDateString(person.birthday),
+                                height: person.height,
+                                passportID: person.passportID,
+                                hairColor: person.hairColor
+                            })
+                        });
+                }}>Read Person Info
+                </button>
+                <button type="submit" onClick={() => {
+                    putDataPerson("http://localhost:8080/jax-rs-1/api/v1/persons", formDataPerson).then();
+                }}>Update Person
+                </button>
+                <button type="submit" onClick={() => {
+                    console.log(formDataPerson.id)
+                    deleteDataPerson("http://localhost:8080/jax-rs-1/api/v1/persons/" + formDataPerson.id)
+                        .then(() => setFormDataPerson({
+                                id: "",
+                                name: "",
+                                birthday: "",
+                                height: "",
+                                passportID: "",
+                                hairColor: "WHITE"
+                            })
+                        );
+
+                }}>Delete Person
                 </button>
             </form>
         </div>
