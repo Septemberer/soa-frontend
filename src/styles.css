@@ -37,3 +37,25 @@ input {
     border: 1px solid black;
     padding: 0.5rem;
 }
+
+.half {
+    width: 47%;
+    padding: 2%;
+    float: left;
+    background: beige;
+    border: 2px solid rgb(128, 128, 128);
+}
+
+button.custom {
+    width: 40%;
+    height: 40%;
+    padding: 2%;
+    margin: 2%;
+}
+
+label {
+    display:block;
+    text-align:left;
+    padding: 5px;
+    margin: 5px;
+}
