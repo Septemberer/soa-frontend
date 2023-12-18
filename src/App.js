@@ -6,6 +6,9 @@ import {convertDateString} from "./helpers";
 
 export default function App() {
 
+    const port1 = 21572;
+    const port2 = 21574;
+
     const [dragonRows, setDragonRows] = useState([])
     const [personRows, setPersonRows] = useState([])
     const [caveRows, setCaveRows] = useState([])
@@ -100,7 +103,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/dragons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
             .then((data) => {
                 getDragons(data)
             });
@@ -118,7 +121,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/persons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons")
             .then((data) => {
                 getPersons(data)
             });
@@ -171,7 +174,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/persons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons")
             .then((data) => {
                 getPersons(data)
             });
@@ -204,7 +207,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/dragons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
             .then((data) => {
                 getDragons(data)
             });
@@ -218,6 +221,7 @@ export default function App() {
                 y: formData.y
             },
         })
+        console.log(url)
         const res = await fetch(url, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
@@ -237,7 +241,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-2/killer/caves")
+        getData("https://localhost:" + port2 + "/jax-rs-2/killer/caves")
             .then((data) => {
                 getCaves(data)
             });
@@ -260,7 +264,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-2/killer/teams")
+        getData("https://localhost:" + port2 + "/jax-rs-2/killer/teams")
             .then((data) => {
                 getTeams(data)
             });
@@ -289,7 +293,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/persons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons")
             .then((data) => {
                 getPersons(data)
             });
@@ -323,7 +327,7 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("http://localhost:8080/jax-rs-1/dragon/dragons")
+        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
             .then((data) => {
                 getDragons(data)
             });
@@ -512,12 +516,12 @@ export default function App() {
                 </label>
 
                 <button className="custom" type="submit" onClick={() => {
-                    postDataDragon("http://localhost:8080/jax-rs-1/dragon/dragons", formDataDragon).then();
+                    postDataDragon("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons", formDataDragon).then();
                 }}>Create Dragon
                 </button>
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataDragon.id)
-                    getData("http://localhost:8080/jax-rs-1/dragon/dragons/" + formDataDragon.id)
+                    getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons/" + formDataDragon.id)
                         .then((dragon) => {
                             setFormDataDragon({
                                 id: dragon.id,
@@ -534,12 +538,12 @@ export default function App() {
                 }}>Read Dragon Info
                 </button>
                 <button className="custom" type="submit" onClick={() => {
-                    putDataDragon("http://localhost:8080/jax-rs-1/dragon/dragons", formDataDragon).then();
+                    putDataDragon("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons", formDataDragon).then();
                 }}>Update Dragon
                 </button>
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataDragon.id)
-                    deleteDataDragon("http://localhost:8080/jax-rs-1/dragon/dragons/" + formDataDragon.id)
+                    deleteDataDragon("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons/" + formDataDragon.id)
                         .then(() => setFormDataDragon({
                                 id: "",
                                 name: "",
@@ -594,12 +598,12 @@ export default function App() {
 
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataPerson)
-                    postDataPerson("http://localhost:8080/jax-rs-1/dragon/persons", formDataPerson).then();
+                    postDataPerson("https://localhost:" + port1 + "/jax-rs-1/dragon/persons", formDataPerson).then();
                 }}>Create Person
                 </button>
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataPerson.id)
-                    getData("http://localhost:8080/jax-rs-1/dragon/persons/" + formDataPerson.id)
+                    getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons/" + formDataPerson.id)
                         .then((person) => {
                             setFormDataPerson({
                                 id: person.id,
@@ -613,12 +617,12 @@ export default function App() {
                 }}>Read Person Info
                 </button>
                 <button className="custom" type="submit" onClick={() => {
-                    putDataPerson("http://localhost:8080/jax-rs-1/dragon/persons", formDataPerson).then();
+                    putDataPerson("https://localhost:" + port1 + "/jax-rs-1/dragon/persons", formDataPerson).then();
                 }}>Update Person
                 </button>
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataPerson.id)
-                    deleteDataPerson("http://localhost:8080/jax-rs-1/dragon/persons/" + formDataPerson.id)
+                    deleteDataPerson("https://localhost:" + port1 + "/jax-rs-1/dragon/persons/" + formDataPerson.id)
                         .then(() => setFormDataPerson({
                                 id: "",
                                 name: "",
@@ -650,11 +654,11 @@ export default function App() {
                 </label>
                 <br/>
                 <button className="custom" type="submit" onClick={() => {
-                    getDataWithBody("http://localhost:8080/jax-rs-1/dragon/dragons/delete-killed",
+                    getDataWithBody("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons/delete-killed",
                         {
                             id: formDataFirstService.id
                         }).then(() => {
-                        getData("http://localhost:8080/jax-rs-1/dragon/dragons")
+                        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
                             .then((data) => {
                                 getDragons(data)
                             });
@@ -662,11 +666,11 @@ export default function App() {
                 }}>Delete Killed Dragons
                 </button>
                 <button className="custom" type="submit" onClick={() => {
-                    getDataWithBody("http://localhost:8080/jax-rs-1/dragon/dragons/delete-by-type",
+                    getDataWithBody("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons/delete-by-type",
                         {
                             "value": formDataFirstService.type
                         }).then(() => {
-                        getData("http://localhost:8080/jax-rs-1/dragon/dragons")
+                        getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
                             .then((data) => {
                                 getDragons(data)
                             });
@@ -685,7 +689,7 @@ export default function App() {
                         character: "WISE",
                         killer: ""
                     });
-                    getData("http://localhost:8080/jax-rs-1/dragon/dragons/get-by-max-color")
+                    getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons/get-by-max-color")
                         .then((dragon) => {
                             setFormDataDragon({
                                 id: dragon.id,
@@ -730,9 +734,9 @@ export default function App() {
                 </label>
 
                 <button className="custom" type="submit" onClick={() => {
-                    console.log("http://localhost:8080/jax-rs-2/killer/teams/create/" +
+                    console.log("https://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
                         formDataTeam.id + "/" + formDataTeam.name + "/" + formDataTeam.size + "/" + formDataTeam.cave)
-                    postDataTeam("http://localhost:8080/jax-rs-2/killer/teams/create/" +
+                    postDataTeam("https://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
                         formDataTeam.id + "/" + formDataTeam.name + "/" + formDataTeam.size + "/" + formDataTeam.cave,
                         formDataTeam).then();
                 }}>Create Team
@@ -750,7 +754,7 @@ export default function App() {
 
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataCave)
-                    postDataCave("http://localhost:8080/jax-rs-2/killer/caves", formDataCave).then();
+                    postDataCave("https://localhost:" + port2 + "/jax-rs-2/killer/caves", formDataCave).then();
                 }}>Create Cave
                 </button>
             </form>
@@ -766,14 +770,14 @@ export default function App() {
                 </label>
                 <br/>
                 <button className="custom" type="submit" onClick={() => {
-                    getDataWithBody("http://localhost:8080/jax-rs-2/killer/teams/" +
+                    getDataWithBody("https://localhost:" + port2 + "/jax-rs-2/killer/teams/" +
                         formDataSecondService.teamId + "/move-to-cave/" + formDataSecondService.caveId,
                         {}).then(() => {
-                        getData("http://localhost:8080/jax-rs-2/killer/teams")
+                        getData("https://localhost:" + port2 + "/jax-rs-2/killer/teams")
                             .then((data) => {
                                 getTeams(data)
                             });
-                        getData("http://localhost:8080/jax-rs-2/killer/caves")
+                        getData("https://localhost:" + port2 + "/jax-rs-2/killer/caves")
                             .then((data) => {
                                 getCaves(data)
                             });
