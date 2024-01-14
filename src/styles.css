@@ -53,6 +53,11 @@ button.custom {
     margin: 2%;
 }
 
+button.refresh {
+    width: 200px;
+    height: 50px;
+}
+
 label {
     display:block;
     text-align:left;

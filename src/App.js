@@ -7,7 +7,7 @@ import {convertDateString} from "./helpers";
 export default function App() {
 
     const port1 = 21572;
-    const port2 = 21574;
+    const port2 = 21573;
 
     const [dragonRows, setDragonRows] = useState([])
     const [personRows, setPersonRows] = useState([])
@@ -241,30 +241,43 @@ export default function App() {
             throw new Error(message);
         }
 
-        getData("https://localhost:" + port2 + "/jax-rs-2/killer/caves")
+        getData("http://localhost:" + port2 + "/jax-rs-2/killer/caves")
             .then((data) => {
                 getCaves(data)
             });
     }
 
+    function getPersonListFromString(patientList = "") {
+        return patientList.split(', ').map(Number);
+    }
+
     async function postDataTeam(url = "", formData = {}) {
         // Default options are marked with *
         console.log(formData)
+
         const res = await fetch(url, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Method' : 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
+                'Access-Control-Allow-Headers' : '*',
+                'Access-Control-Allow-Credentials' : 'true'
             },
-            body: formData.personList
+            body: JSON.stringify({
+                formData : getPersonListFromString(formData.personList)
+            })
         })
+
+        console.log(res)
 
         if (!res.ok) {
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
             throw new Error(message);
         }
 
-        getData("https://localhost:" + port2 + "/jax-rs-2/killer/teams")
+        getData("http://localhost:" + port2 + "/jax-rs-2/killer/teams")
             .then((data) => {
                 getTeams(data)
             });
@@ -403,7 +416,7 @@ export default function App() {
                 name: team.name,
                 size: team.size,
                 cave: team.cave.id,
-                personList: getPersonList(team.personList)
+                personList: team.personList == null ? null : getPersonList(team.personList)
             }
             teamArray.push(teamDTO)
         })
@@ -446,7 +459,26 @@ export default function App() {
 
     return (
         <div className="App">
-            <h1>First Service. Dragons and Persons</h1>
+            <h1>First Service. Dragons and Persons <button className="refresh" type="submit" onClick={() => {
+                getData("http://localhost:" + port2 + "/jax-rs-2/killer/teams")
+                    .then((data) => {
+                        getTeams(data)
+                    });
+                getData("http://localhost:" + port2 + "/jax-rs-2/killer/caves")
+                    .then((data) => {
+                        getCaves(data)
+                    });
+                getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
+                    .then((data) => {
+                        getDragons(data)
+                    });
+                getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons")
+                    .then((data) => {
+                        getPersons(data)
+                    });
+            }}>REFRESH
+            </button></h1>
+
             <h2>Dragons</h2>
             <Table rows={dragonRows} columns={dragonColumns}/>
             <h2>Persons</h2>
@@ -707,7 +739,25 @@ export default function App() {
                 </button>
             </form>
             <br/>
-            <h1>Second Service. Caves and Teams</h1>
+            <h1>Second Service. Caves and Teams <button className="refresh" type="submit" onClick={() => {
+                getData("http://localhost:" + port2 + "/jax-rs-2/killer/teams")
+                    .then((data) => {
+                        getTeams(data)
+                    });
+                getData("http://localhost:" + port2 + "/jax-rs-2/killer/caves")
+                    .then((data) => {
+                        getCaves(data)
+                    });
+                getData("https://localhost:" + port1 + "/jax-rs-1/dragon/dragons")
+                    .then((data) => {
+                        getDragons(data)
+                    });
+                getData("https://localhost:" + port1 + "/jax-rs-1/dragon/persons")
+                    .then((data) => {
+                        getPersons(data)
+                    });
+            }}>REFRESH
+            </button></h1>
             <h2>Caves</h2>
             <Table rows={caveRows} columns={caveColumns}/>
             <h2>Teams</h2>
@@ -734,12 +784,19 @@ export default function App() {
                 </label>
 
                 <button className="custom" type="submit" onClick={() => {
-                    console.log("https://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
+                    console.log("http://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
                         formDataTeam.id + "/" + formDataTeam.name + "/" + formDataTeam.size + "/" + formDataTeam.cave)
-                    postDataTeam("https://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
+                    postDataTeam("http://localhost:" + port2 + "/jax-rs-2/killer/teams/create/" +
                         formDataTeam.id + "/" + formDataTeam.name + "/" + formDataTeam.size + "/" + formDataTeam.cave,
                         formDataTeam).then();
                 }}>Create Team
+                </button>
+                <button className="custom" type="submit" onClick={() => {
+                    getData("http://localhost:" + port2 + "/jax-rs-2/killer/teams")
+                        .then((data) => {
+                            getTeams(data)
+                        });
+                }}>Get Teams
                 </button>
             </form>
             <form className="half" onSubmit={handleSubmit}>
@@ -754,8 +811,15 @@ export default function App() {
 
                 <button className="custom" type="submit" onClick={() => {
                     console.log(formDataCave)
-                    postDataCave("https://localhost:" + port2 + "/jax-rs-2/killer/caves", formDataCave).then();
+                    postDataCave("http://localhost:" + port2 + "/jax-rs-2/killer/caves", formDataCave).then();
                 }}>Create Cave
+                </button>
+                <button className="custom" type="submit" onClick={() => {
+                    getData("http://localhost:" + port2 + "/jax-rs-2/killer/caves")
+                        .then((data) => {
+                            getCaves(data)
+                        });
+                }}>Get Caves
                 </button>
             </form>
             <form className="half" onSubmit={handleSubmit}>
@@ -770,14 +834,14 @@ export default function App() {
                 </label>
                 <br/>
                 <button className="custom" type="submit" onClick={() => {
-                    getDataWithBody("https://localhost:" + port2 + "/jax-rs-2/killer/teams/" +
+                    getDataWithBody("http://localhost:" + port2 + "/jax-rs-2/killer/teams/" +
                         formDataSecondService.teamId + "/move-to-cave/" + formDataSecondService.caveId,
                         {}).then(() => {
-                        getData("https://localhost:" + port2 + "/jax-rs-2/killer/teams")
+                        getData("http://localhost:" + port2 + "/jax-rs-2/killer/teams")
                             .then((data) => {
                                 getTeams(data)
                             });
-                        getData("https://localhost:" + port2 + "/jax-rs-2/killer/caves")
+                        getData("http://localhost:" + port2 + "/jax-rs-2/killer/caves")
                             .then((data) => {
                                 getCaves(data)
                             });
