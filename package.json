@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "options": {
+    "homepage": "https://septemberer.github.io/soa-frontend",
     "allowedHosts": ["localhost", ".localhost"],
     "proxy": "https://localhost:5000/"
   },
