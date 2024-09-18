@@ -95,7 +95,7 @@ export default function App() {
 
             <form className="half" onSubmit={handleSubmit}>
 
-                <button id="big_button" className="button-64" type="submit" onClick={() => {}}><b><font size="6">Перевернуть календарь</font></b></button>
+                <button id="big_button" className="button-64" type="submit" onClick={() => {}}><b><font size="6">Let's GO</font></b></button>
 
             </form>
         </div>
