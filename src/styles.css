@@ -21,7 +21,16 @@ th span {
     margin-right: 1rem;
 }
 
-input {
+#login {
+    -webkit-appearance: none;
+    border: 1px solid gray;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    background: #f0f0f0;
+}
+
+#password {
     -webkit-appearance: none;
     border: 1px solid gray;
     padding: 0.5rem;
@@ -39,24 +48,75 @@ input {
 }
 
 .half {
-    width: 47%;
-    padding: 2%;
+    width: 43%;
+    padding: 1%;
+    margin: 1%;
     float: left;
     background: beige;
     border: 2px solid rgb(128, 128, 128);
 }
 
-button.custom {
-    width: 40%;
-    height: 40%;
-    padding: 2%;
-    margin: 2%;
+#yes_button {
+    text-align-all: center;
+    margin-left: 0;
+    margin-right: 10%;
+    align-self: center;
+    width: 100%;
+    font-family: "Courier New", system-ui;
+    background-image: linear-gradient(144deg, #44944A, #98FB98 50%, #00FF7F);
 }
 
-button.refresh {
-    width: 200px;
-    height: 50px;
+#no_button {
+    text-align-all: center;
+    margin-left: 0;
+    margin-right: 10%;
+    align-self: center;
+    width: 100%;
+    font-family: "Courier New", system-ui;
+    background-image: linear-gradient(144deg, #EE804D, #A02C9C 50%, #FF8400);
 }
+
+#big_button {
+    text-align-all: center;
+    margin: 0px;
+    padding: 10%;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    font-family: "Courier New", system-ui;
+    background-image: linear-gradient(144deg, #4D20EE, #5C5CCD 50%, #0024FF);
+}
+
+/* CSS */
+.button-64 {
+    align-items: center;
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 1em;
+    max-width: 200%;
+    min-width: 40%;
+    padding: 0.5em;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.button-64:active,
+.button-64:hover {
+    outline: 0;
+}
+
 
 label {
     display:block;
